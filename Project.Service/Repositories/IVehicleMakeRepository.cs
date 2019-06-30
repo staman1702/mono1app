@@ -11,7 +11,7 @@ namespace Project.Service.Repositories
     {
         Task<IEnumerable<VehicleMake>> ListAsync();
         Task AddAsync(VehicleMake vehicleMake);
-        Task<VehicleMake> FindByIdAsync(int id);
+        Task<VehicleMake> FindByIdAsync(Guid id);
         void Update(VehicleMake vehicleMake);
         void Remove(VehicleMake vehicleMake);
     }

@@ -29,8 +29,8 @@ namespace Project.Service.Persistence.Contexts
 
             builder.Entity<VehicleMake>().HasData
                 (
-                new VehicleMake { Id = 1, Name = "VolksWagen", Abrv = "VW" },
-                new VehicleMake { Id = 2, Name = "Bmw", Abrv = "BMW" }
+                new VehicleMake { Id = Guid.Parse("2ca5ebe0-9b49-11e9-b475-0800200c9a66"), Name = "VolksWagen", Abrv = "VW" },
+                new VehicleMake { Id = Guid.Parse("0d6ac610-9b49-11e9-b475-0800200c9a66"), Name = "Bmw", Abrv = "BMW" }
                 );
 
             builder.Entity<VehicleModel>().ToTable("VehicleModels");
@@ -42,8 +42,8 @@ namespace Project.Service.Persistence.Contexts
 
             builder.Entity<VehicleModel>().HasData
                (
-               new VehicleModel { Id = 1, Name = "Golf 3", Abrv = "G3", VehicleMakeId = 1  },
-               new VehicleModel { Id = 2, Name = "x3", Abrv = "X3", VehicleMakeId = 2 }
+               new VehicleModel { Id = Guid.NewGuid(), Name = "Golf 3", Abrv = "G3", VehicleMakeId = Guid.Parse("2ca5ebe0-9b49-11e9-b475-0800200c9a66") },
+               new VehicleModel { Id = Guid.NewGuid(), Name = "x3", Abrv = "X3", VehicleMakeId = Guid.Parse("0d6ac610-9b49-11e9-b475-0800200c9a66") }
 
                )
                ;

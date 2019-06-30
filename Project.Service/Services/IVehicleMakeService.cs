@@ -11,7 +11,7 @@ namespace Project.Service.Services
     {
         Task<IEnumerable<VehicleMake>> ListAsync();
         Task<VehicleMakeResponse> SaveAsync(VehicleMake vehicleMake);
-        Task<VehicleMakeResponse> UpdateAsync(int id, VehicleMake vehicleMake);
-        Task<VehicleMakeResponse> DeleteAsync(int id);
+        Task<VehicleMakeResponse> UpdateAsync(Guid id, VehicleMake vehicleMake);
+        Task<VehicleMakeResponse> DeleteAsync(Guid id);
     }
 }

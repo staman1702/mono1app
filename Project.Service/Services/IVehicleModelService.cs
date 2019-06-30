@@ -11,7 +11,7 @@ namespace Project.Service.Services
     {
         Task<IEnumerable<VehicleModel>> ListModelAsync();
         Task<VehicleModelResponse> SaveModelAsync(VehicleModel vehicleModel);
-        Task<VehicleModelResponse> UpdateModelAsync(int id, VehicleModel vehicleModel);
-        Task<VehicleModelResponse> DeleteModelAsync(int id);
+        Task<VehicleModelResponse> UpdateModelAsync(Guid id, VehicleModel vehicleModel);
+        Task<VehicleModelResponse> DeleteModelAsync(Guid id);
     }
 }

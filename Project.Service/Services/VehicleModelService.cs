@@ -37,7 +37,7 @@ namespace Project.Service.Services
             }
         }
 
-        public async Task<VehicleModelResponse> UpdateModelAsync(int id, VehicleModel vehicleModel)
+        public async Task<VehicleModelResponse> UpdateModelAsync(Guid id, VehicleModel vehicleModel)
         {
             var existingVehicleModel = await _vehicleModelRepository.FindByIdAsync(id);
 
@@ -62,7 +62,7 @@ namespace Project.Service.Services
             }
         }
 
-        public async Task<VehicleModelResponse> DeleteModelAsync(int id)
+        public async Task<VehicleModelResponse> DeleteModelAsync(Guid id)
         {
             var existingVehicleModel = await _vehicleModelRepository.FindByIdAsync(id);
 

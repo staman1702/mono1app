@@ -10,7 +10,7 @@ namespace Project.Service.Repositories
     {
         Task<IEnumerable<VehicleModel>> ListAsync();
         Task AddAsync(VehicleModel vehicleModel);
-        Task<VehicleModel> FindByIdAsync(int id);
+        Task<VehicleModel> FindByIdAsync(Guid id);
         void Update(VehicleModel vehicleModel);
         void Remove(VehicleModel vehicleModel);
     }

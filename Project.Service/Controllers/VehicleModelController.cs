@@ -51,7 +51,7 @@ namespace Project.Service.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutModelAsync(int id, [FromBody] SaveVehicleModelResource resource)
+        public async Task<IActionResult> PutModelAsync(Guid id, [FromBody] SaveVehicleModelResource resource)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState.GetErrorMessages());
@@ -67,7 +67,7 @@ namespace Project.Service.Controllers
         }
 
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteModelAsync(int id)
+        public async Task<IActionResult> DeleteModelAsync(Guid id)
         {
             var result = await _vehicleModelService.DeleteModelAsync(id);
 

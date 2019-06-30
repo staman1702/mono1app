@@ -52,7 +52,7 @@ namespace Project.Service.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutAsync(int id, [FromBody] SaveVehicleMakeResource resource)
+        public async Task<IActionResult> PutAsync(Guid id, [FromBody] SaveVehicleMakeResource resource)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState.GetErrorMessages());
@@ -68,7 +68,7 @@ namespace Project.Service.Controllers
         }
 
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteAsync(int id)
+        public async Task<IActionResult> DeleteAsync(Guid id)
         {
             var result = await _vehicleMakeService.DeleteAsync(id);
 

@@ -1,9 +1,9 @@
-﻿using Microsoft.EntityFrameworkCore.Metadata;
+﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Project.Service.Migrations
 {
-    public partial class initial : Migration
+    public partial class guid_ : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -11,8 +11,7 @@ namespace Project.Service.Migrations
                 name: "VehicleMakes",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    Id = table.Column<Guid>(nullable: false),
                     Name = table.Column<string>(maxLength: 50, nullable: false),
                     Abrv = table.Column<string>(maxLength: 15, nullable: false)
                 },
@@ -25,11 +24,10 @@ namespace Project.Service.Migrations
                 name: "VehicleModels",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    Id = table.Column<Guid>(nullable: false),
                     Name = table.Column<string>(maxLength: 35, nullable: false),
                     Abrv = table.Column<string>(maxLength: 15, nullable: false),
-                    VehicleMakeId = table.Column<int>(nullable: false)
+                    VehicleMakeId = table.Column<Guid>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -45,22 +43,22 @@ namespace Project.Service.Migrations
             migrationBuilder.InsertData(
                 table: "VehicleMakes",
                 columns: new[] { "Id", "Abrv", "Name" },
-                values: new object[] { 1, "VW", "VolksWagen" });
+                values: new object[] { new Guid("2ca5ebe0-9b49-11e9-b475-0800200c9a66"), "VW", "VolksWagen" });
 
             migrationBuilder.InsertData(
                 table: "VehicleMakes",
                 columns: new[] { "Id", "Abrv", "Name" },
-                values: new object[] { 2, "BMW", "Bmw" });
+                values: new object[] { new Guid("0d6ac610-9b49-11e9-b475-0800200c9a66"), "BMW", "Bmw" });
 
             migrationBuilder.InsertData(
                 table: "VehicleModels",
                 columns: new[] { "Id", "Abrv", "Name", "VehicleMakeId" },
-                values: new object[] { 1, "G3", "Golf 3", 1 });
+                values: new object[] { new Guid("967853e0-3946-444f-a2d1-0d5765fa5745"), "G3", "Golf 3", new Guid("2ca5ebe0-9b49-11e9-b475-0800200c9a66") });
 
             migrationBuilder.InsertData(
                 table: "VehicleModels",
                 columns: new[] { "Id", "Abrv", "Name", "VehicleMakeId" },
-                values: new object[] { 2, "X3", "x3", 2 });
+                values: new object[] { new Guid("d42f2e63-17ca-4184-b5f9-1026ecf323bd"), "X3", "x3", new Guid("0d6ac610-9b49-11e9-b475-0800200c9a66") });
 
             migrationBuilder.CreateIndex(
                 name: "IX_VehicleModels_VehicleMakeId",

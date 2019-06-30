@@ -26,7 +26,7 @@ namespace Project.Service.Persistence.Repositories
             await _context.VehicleModels.AddAsync(vehicleModel);
         }
 
-        public async Task<VehicleModel> FindByIdAsync(int id)
+        public async Task<VehicleModel> FindByIdAsync(Guid id)
         {
             return await _context.VehicleModels.FindAsync(id);
         }
