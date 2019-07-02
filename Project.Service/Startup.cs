@@ -44,6 +44,8 @@ namespace Project.Service
             services.AddScoped<IVehicleModelService, VehicleModelService>();
 
             services.AddAutoMapper();
+
+            services.AddHttpClient();
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
