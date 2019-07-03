@@ -45,6 +45,7 @@ namespace Project.Service
 
             services.AddAutoMapper();
 
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddHttpClient();
         }
 

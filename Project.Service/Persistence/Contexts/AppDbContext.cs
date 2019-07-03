@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
@@ -22,6 +23,7 @@ namespace Project.Service.Persistence.Contexts
 
             builder.Entity<VehicleMake>().ToTable("VehicleMakes");
             builder.Entity<VehicleMake>().HasKey(p => p.Id);
+            builder.Entity<VehicleMake>().Property(p => p.Id).HasDefaultValueSql("NEWID()");
             builder.Entity<VehicleMake>().Property(p=>p.Id).IsRequired();
             builder.Entity<VehicleMake>().Property(p => p.Name).IsRequired().HasMaxLength(50);
             builder.Entity<VehicleMake>().Property(p => p.Abrv).IsRequired().HasMaxLength(15);

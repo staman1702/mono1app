@@ -11,10 +11,12 @@ namespace Project.Service.Services
     public class VehicleMakeService : IVehicleMakeService
     {
         private readonly IVehicleMakeRepository _vehicleMakeRepository;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public VehicleMakeService(IVehicleMakeRepository vehicleMakeRepository)
+        public VehicleMakeService(IVehicleMakeRepository vehicleMakeRepository, IUnitOfWork unitOfWork)
         {
-            _vehicleMakeRepository = vehicleMakeRepository;           
+            _vehicleMakeRepository = vehicleMakeRepository;
+            _unitOfWork = unitOfWork;
         }
 
         public async Task<IEnumerable<VehicleMake>> ListAsync()
@@ -27,6 +29,7 @@ namespace Project.Service.Services
             try
             {
                 await _vehicleMakeRepository.AddAsync(vehicleMake);
+                await _unitOfWork.CompleteAsync();
 
                 return new VehicleMakeResponse(vehicleMake);
             }
@@ -50,6 +53,7 @@ namespace Project.Service.Services
             try
             {
                 _vehicleMakeRepository.Update(existingVehicleMake);
+                await _unitOfWork.CompleteAsync();
 
                 return new VehicleMakeResponse(existingVehicleMake);
             }
@@ -70,6 +74,7 @@ namespace Project.Service.Services
             try
             {
                 _vehicleMakeRepository.Remove(existingVehicleMake);
+                await _unitOfWork.CompleteAsync();
 
                 return new VehicleMakeResponse(existingVehicleMake);
             }

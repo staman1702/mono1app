@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Project.Service.Migrations
 {
-    public partial class guid_ : Migration
+    public partial class init : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -11,7 +11,7 @@ namespace Project.Service.Migrations
                 name: "VehicleMakes",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(nullable: false),
+                    Id = table.Column<Guid>(nullable: false, defaultValueSql: "NEWID()"),
                     Name = table.Column<string>(maxLength: 50, nullable: false),
                     Abrv = table.Column<string>(maxLength: 15, nullable: false)
                 },
@@ -53,12 +53,12 @@ namespace Project.Service.Migrations
             migrationBuilder.InsertData(
                 table: "VehicleModels",
                 columns: new[] { "Id", "Abrv", "Name", "VehicleMakeId" },
-                values: new object[] { new Guid("967853e0-3946-444f-a2d1-0d5765fa5745"), "G3", "Golf 3", new Guid("2ca5ebe0-9b49-11e9-b475-0800200c9a66") });
+                values: new object[] { new Guid("35d1d5cc-d8f6-41aa-9a2f-a670a48f6657"), "G3", "Golf 3", new Guid("2ca5ebe0-9b49-11e9-b475-0800200c9a66") });
 
             migrationBuilder.InsertData(
                 table: "VehicleModels",
                 columns: new[] { "Id", "Abrv", "Name", "VehicleMakeId" },
-                values: new object[] { new Guid("d42f2e63-17ca-4184-b5f9-1026ecf323bd"), "X3", "x3", new Guid("0d6ac610-9b49-11e9-b475-0800200c9a66") });
+                values: new object[] { new Guid("5ee52db2-a1c7-4b4e-9b2f-33006833d379"), "X3", "x3", new Guid("0d6ac610-9b49-11e9-b475-0800200c9a66") });
 
             migrationBuilder.CreateIndex(
                 name: "IX_VehicleModels_VehicleMakeId",

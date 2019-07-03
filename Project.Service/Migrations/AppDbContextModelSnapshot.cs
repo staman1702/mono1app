@@ -22,7 +22,8 @@ namespace Project.Service.Migrations
             modelBuilder.Entity("Project.Service.Models.VehicleMake", b =>
                 {
                     b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd();
+                        .ValueGeneratedOnAdd()
+                        .HasDefaultValueSql("NEWID()");
 
                     b.Property<string>("Abrv")
                         .IsRequired()
@@ -75,14 +76,14 @@ namespace Project.Service.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("967853e0-3946-444f-a2d1-0d5765fa5745"),
+                            Id = new Guid("35d1d5cc-d8f6-41aa-9a2f-a670a48f6657"),
                             Abrv = "G3",
                             Name = "Golf 3",
                             VehicleMakeId = new Guid("2ca5ebe0-9b49-11e9-b475-0800200c9a66")
                         },
                         new
                         {
-                            Id = new Guid("d42f2e63-17ca-4184-b5f9-1026ecf323bd"),
+                            Id = new Guid("5ee52db2-a1c7-4b4e-9b2f-33006833d379"),
                             Abrv = "X3",
                             Name = "x3",
                             VehicleMakeId = new Guid("0d6ac610-9b49-11e9-b475-0800200c9a66")
