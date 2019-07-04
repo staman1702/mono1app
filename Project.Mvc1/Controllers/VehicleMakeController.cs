@@ -5,6 +5,7 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
+using Project.Mvc1.Paging;
 using Project.Service.Models;
 using Project.Service.Resources;
 
@@ -12,8 +13,9 @@ namespace Project.Mvc1.Controllers
 {
     public class VehicleMakeController : Controller
     {
-        public ActionResult Index()
+        public ActionResult Index(string sortOrder, string currentFilter, string searchString, int? pageNumber)
         {
+            
             List<VehicleMake> vehicleMakes = null;
 
             using (var client = new HttpClient())
@@ -37,8 +39,49 @@ namespace Project.Mvc1.Controllers
                 }
             }
 
-            return View(vehicleMakes);
+            ViewData["CurrentSort"] = sortOrder;
+            ViewData["NameSortParm"] = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
+            ViewData["AbrvSortParm"] = sortOrder == "Abrv" ? "abrv_desc" : "Abrv";
+
+            if (searchString != null)
+            {
+                pageNumber = 1;
+            }
+            else
+            {
+                searchString = currentFilter;
+            }
+
+            ViewData["CurrentFilter"] = searchString;
+
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                vehicleMakes = vehicleMakes.Where(m => m.Name.Contains(searchString)).ToList();
+            }
+
+            switch (sortOrder)
+            {
+                case "name_desc":
+                    vehicleMakes = vehicleMakes.OrderByDescending(m => m.Name).ToList();
+                    break;
+                case "Abrv":
+                    vehicleMakes = vehicleMakes.OrderBy(m => m.Abrv).ToList();
+                    break;
+                case "abrv_desc":
+                    vehicleMakes = vehicleMakes.OrderByDescending(m => m.Abrv).ToList();
+                    break;
+                default:
+                    vehicleMakes = vehicleMakes.OrderBy(m => m.Name).ToList();
+                    break;
+            }
+
+
+
+            int pageSize = 3;
+
+            return View(PaginatedList<VehicleMake>.Create(vehicleMakes.ToList(), pageNumber ?? 1, pageSize));
         }
+    
 
 
         public ActionResult Create()
