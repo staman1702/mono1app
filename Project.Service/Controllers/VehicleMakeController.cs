@@ -27,7 +27,6 @@ namespace Project.Service.Controllers
         }
 
         [HttpGet]
-        //[Route("api/VehicleMake")]
         public async Task<IEnumerable<VehicleMakeResource>> ListAsync()
         {
             var vehicleMakes = await _vehicleMakeService.ListAsync();
@@ -37,7 +36,6 @@ namespace Project.Service.Controllers
         }
 
         [HttpPost]
-        //[Route("api/VehicleMake/Create")]
         public async Task<IActionResult> PostAsync([FromBody] SaveVehicleMakeResource resource)
         {
             if (!ModelState.IsValid)
@@ -54,7 +52,6 @@ namespace Project.Service.Controllers
         }
 
         [HttpPut("{id}")]
-        //[Route("api/VehicleMake/Edit/")]
         public async Task<IActionResult> PutAsync(Guid id, [FromBody] SaveVehicleMakeResource resource)
         {
             if (!ModelState.IsValid)
@@ -71,7 +68,6 @@ namespace Project.Service.Controllers
         }
 
         [HttpDelete("{id}")]
-        //[Route("api/VehicleMake/Delete/")]
         public async Task<IActionResult> DeleteAsync(Guid id)
         {
             var result = await _vehicleMakeService.DeleteAsync(id);

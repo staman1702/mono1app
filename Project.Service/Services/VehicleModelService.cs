@@ -11,10 +11,12 @@ namespace Project.Service.Services
     public class VehicleModelService : IVehicleModelService
     {
         private readonly IVehicleModelRepository _vehicleModelRepository;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public VehicleModelService(IVehicleModelRepository vehicleModelRepository)
+        public VehicleModelService(IVehicleModelRepository vehicleModelRepository, IUnitOfWork unitOfWork)
         {
             _vehicleModelRepository = vehicleModelRepository;
+            _unitOfWork = unitOfWork;
         }
 
         public async Task<IEnumerable<VehicleModel>> ListModelAsync()
@@ -27,6 +29,8 @@ namespace Project.Service.Services
             try
             {
                 await _vehicleModelRepository.AddAsync(vehicleModel);
+                await _unitOfWork.CompleteAsync();
+
 
                 return new VehicleModelResponse(vehicleModel);
             }
@@ -51,6 +55,8 @@ namespace Project.Service.Services
             try
             {
                 _vehicleModelRepository.Update(existingVehicleModel);
+                await _unitOfWork.CompleteAsync();
+
 
 
                 return new VehicleModelResponse(existingVehicleModel);
@@ -72,6 +78,8 @@ namespace Project.Service.Services
             try
             {
                 _vehicleModelRepository.Remove(existingVehicleModel);
+                await _unitOfWork.CompleteAsync();
+
 
                 return new VehicleModelResponse(existingVehicleModel);
             }

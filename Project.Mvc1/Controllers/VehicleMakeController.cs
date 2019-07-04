@@ -6,8 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using Project.Mvc1.Paging;
-using Project.Service.Models;
-using Project.Service.Resources;
+using Project.Mvc1.ViewModels;
 
 namespace Project.Mvc1.Controllers
 {
@@ -16,7 +15,7 @@ namespace Project.Mvc1.Controllers
         public ActionResult Index(string sortOrder, string currentFilter, string searchString, int? pageNumber)
         {
             
-            List<VehicleMake> vehicleMakes = null;
+            List<VehicleMakeViewModel> vehicleMakes = null;
 
             using (var client = new HttpClient())
             {
@@ -28,7 +27,7 @@ namespace Project.Mvc1.Controllers
                 var result = responseTask.Result;
                 if (result.IsSuccessStatusCode)
                 {
-                    var readTask = result.Content.ReadAsAsync<List<VehicleMake>>();
+                    var readTask = result.Content.ReadAsAsync<List<VehicleMakeViewModel>>();
                     readTask.Wait();
 
                     vehicleMakes = readTask.Result;
@@ -79,7 +78,7 @@ namespace Project.Mvc1.Controllers
 
             int pageSize = 3;
 
-            return View(PaginatedList<VehicleMake>.Create(vehicleMakes.ToList(), pageNumber ?? 1, pageSize));
+            return View(PaginatedList<VehicleMakeViewModel>.Create(vehicleMakes.ToList(), pageNumber ?? 1, pageSize));
         }
     
 
@@ -90,7 +89,7 @@ namespace Project.Mvc1.Controllers
         }
 
         [HttpPost]
-        public ActionResult Create(VehicleMake vehicleMake)
+        public ActionResult Create(VehicleMakeViewModel vehicleMake)
         {
 
 
@@ -121,7 +120,7 @@ namespace Project.Mvc1.Controllers
 
         public ActionResult Edit(Guid id)
         {
-            VehicleMake vehicleMake = null;
+            VehicleMakeViewModel vehicleMake = null;
 
             using (var client = new HttpClient())
             {
@@ -133,7 +132,7 @@ namespace Project.Mvc1.Controllers
                 var result = responseTask.Result;
                 if (result.IsSuccessStatusCode)
                 {
-                    var readTask = result.Content.ReadAsAsync<VehicleMake>();
+                    var readTask = result.Content.ReadAsAsync<VehicleMakeViewModel>();
                     readTask.Wait();
 
                     vehicleMake = readTask.Result;
@@ -144,7 +143,7 @@ namespace Project.Mvc1.Controllers
         }
 
         [HttpPost]
-        public ActionResult Edit(Guid id, VehicleMake vehicleMake)
+        public ActionResult Edit(Guid id, VehicleMakeViewModel vehicleMake)
         {
             
             using (var client = new HttpClient())
