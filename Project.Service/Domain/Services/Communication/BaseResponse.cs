@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Project.Service.Services.Communication
+namespace Project.Service.Domain.Services.Communication
 {
     public class BaseResponse
     {

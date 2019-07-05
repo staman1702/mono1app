@@ -10,11 +10,12 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-using Project.Service.Repositories;
+using Project.Service.Domain.Repositories;
 using Project.Service.Services;
 using AutoMapper;
 using Project.Service.Persistence.Repositories;
 using Project.Service.Persistence.Contexts;
+using Project.Service.Domain.Services;
 
 namespace Project.Service
 {

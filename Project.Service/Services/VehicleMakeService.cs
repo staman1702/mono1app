@@ -2,9 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Project.Service.Models;
-using Project.Service.Repositories;
-using Project.Service.Services.Communication;
+using Project.Service.Domain.Models;
+using Project.Service.Domain.Repositories;
+using Project.Service.Domain.Services;
+using Project.Service.Domain.Services.Communication;
 
 namespace Project.Service.Services
 {

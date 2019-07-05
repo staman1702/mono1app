@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
-using Project.Service.Models;
+using Project.Service.Domain.Models;
 using Project.Service.Resources;
 
 

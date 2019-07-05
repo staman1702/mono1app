@@ -4,11 +4,11 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Project.Service.Services;
 using AutoMapper;
 using Project.Service.Resources;
 using Project.Service.Extensions;
-using Project.Service.Models;
+using Project.Service.Domain.Models;
+using Project.Service.Domain.Services;
 
 namespace Project.Service.Controllers
 {

@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Project.Service.Models;
-using Project.Service.Services.Communication;
+using Project.Service.Domain.Models;
+using Project.Service.Domain.Services.Communication;
 
-namespace Project.Service.Services
+namespace Project.Service.Domain.Services
 {
     public interface IVehicleModelService
     {

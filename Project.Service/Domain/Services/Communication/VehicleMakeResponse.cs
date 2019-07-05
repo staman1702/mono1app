@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Project.Service.Models;
+using Project.Service.Domain.Models;
 
-namespace Project.Service.Services.Communication
+namespace Project.Service.Domain.Services.Communication
 {
     public class VehicleMakeResponse : BaseResponse
     {

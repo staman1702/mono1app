@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Project.Service.Models;
+using Project.Service.Domain.Models;
 
 
-namespace Project.Service.Repositories
+namespace Project.Service.Domain.Repositories
 {
     public interface IVehicleMakeRepository
     {

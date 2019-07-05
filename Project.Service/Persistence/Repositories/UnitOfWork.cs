@@ -1,5 +1,5 @@
 ﻿using Project.Service.Persistence.Contexts;
-using Project.Service.Repositories;
+using Project.Service.Domain.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
