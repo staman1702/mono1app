@@ -5,11 +5,8 @@ using System.Threading.Tasks;
 
 namespace Project.Service.Domain.Models
 {
-    public class VehicleMake
+    public class VehicleMake : Vehicle
     {        
-        public Guid Id { get; set; }
-        public string Name { get; set; }
-        public string Abrv { get; set; }
         public IList<VehicleModel> VehicleModels { get; set; } = new List<VehicleModel>();
     }
 }

@@ -5,13 +5,8 @@ using System.Threading.Tasks;
 
 namespace Project.Service.Domain.Models
 {
-    public class VehicleModel
-    {
-        public Guid Id { get; set; }
-        public string Name { get; set; }
-        public string Abrv { get; set; }
-        
-    
+    public class VehicleModel : Vehicle
+    {  
         public Guid VehicleMakeId { get; set; }
         public VehicleMake VehicleMake { get; set; }
     }
