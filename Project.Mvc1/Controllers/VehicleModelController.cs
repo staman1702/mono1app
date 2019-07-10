@@ -21,7 +21,7 @@ namespace Project.Mvc1.Controllers
 
             using (var client = new HttpClient())
             {
-                client.BaseAddress = new Uri("http://localhost:49444/api/VehicleModel");
+                client.BaseAddress = new Uri("http://localhost:8080/api/VehicleModel");
 
                 var responseTask = client.GetAsync("VehicleModel");
                 responseTask.Wait();
@@ -44,6 +44,7 @@ namespace Project.Mvc1.Controllers
             ViewData["NameSortParm"] = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
             ViewData["AbrvSortParm"] = sortOrder == "Abrv" ? "abrv_desc" : "Abrv";
             ViewData["MakeSortParm"] = sortOrder == "Make" ? "make_desc" : "Make";
+            
 
             if (searchString1 != null)
             {
@@ -58,15 +59,17 @@ namespace Project.Mvc1.Controllers
 
             if (!String.IsNullOrEmpty(searchString1))
             {
+                ViewData["SearchString1"] = searchString1;
                 vehicleModels = vehicleModels.Where(m => m.Name.Contains(searchString1)).ToList();
             }
 
+
             if (!String.IsNullOrEmpty(searchString2))
             {
-
+                ViewData["SearchString2"] = searchString2;
                 vehicleModels = vehicleModels.Where(m => m.VehicleMake.Name.Contains(searchString2)).ToList();
             }
-
+            
             switch (sortOrder)
             {
                 case "name_desc":
@@ -104,7 +107,7 @@ namespace Project.Mvc1.Controllers
 
             using (var client = new HttpClient())
             {
-                client.BaseAddress = new Uri("http://localhost:49444/api/VehicleMake");
+                client.BaseAddress = new Uri("http://localhost:8080/api/VehicleMake");
 
                 var responseTask = client.GetAsync("VehicleMake");
                 responseTask.Wait();
@@ -146,7 +149,7 @@ namespace Project.Mvc1.Controllers
             
             using (var client = new HttpClient())
             {
-                client.BaseAddress = new Uri("http://localhost:49444/api/VehicleModel");
+                client.BaseAddress = new Uri("http://localhost:8080/api/VehicleModel");
 
                 var postTask = client.PostAsJsonAsync("VehicleModel", vehicleModel);
                 postTask.Wait();
@@ -174,7 +177,7 @@ namespace Project.Mvc1.Controllers
 
             using (var client = new HttpClient())
             {
-                client.BaseAddress = new Uri("http://localhost:49444/api/");
+                client.BaseAddress = new Uri("http://localhost:8080/api/");
                 //HTTP GET
                 var responseTask = client.GetAsync("VehicleModel/" + id.ToString());
                 responseTask.Wait();
@@ -194,7 +197,7 @@ namespace Project.Mvc1.Controllers
 
             using (var client = new HttpClient())
             {
-                client.BaseAddress = new Uri("http://localhost:49444/api/VehicleMake");
+                client.BaseAddress = new Uri("http://localhost:8080/api/VehicleMake");
 
                 var responseTask = client.GetAsync("VehicleMake");
                 responseTask.Wait();
@@ -236,7 +239,7 @@ namespace Project.Mvc1.Controllers
 
             using (var client = new HttpClient())
             {
-                client.BaseAddress = new Uri("http://localhost:49444/api/VehicleModel");
+                client.BaseAddress = new Uri("http://localhost:8080/api/VehicleModel");
 
                 //HTTP POST
                 var putTask = client.PutAsJsonAsync("VehicleModel/" + id.ToString(), vehicleModel);
@@ -258,7 +261,7 @@ namespace Project.Mvc1.Controllers
         {
             using (var client = new HttpClient())
             {
-                client.BaseAddress = new Uri("http://localhost:49444/api/");
+                client.BaseAddress = new Uri("http://localhost:8080/api/");
 
                 //HTTP DELETE
                 var deleteTask = client.DeleteAsync("VehicleModel/" + id.ToString());
