@@ -9,27 +9,27 @@ Summary: develop a minimalistic application of your choice by following technolo
 
 Requirements
 
-·         Create a database with following elements
+·         __Create a database with following elements
 
-·         VehicleMake (Id,Name,Abrv) e.g. BMW,Ford,Volkswagen,
+·         -------VehicleMake (Id,Name,Abrv) e.g. BMW,Ford,Volkswagen,
 
-·         VehicleModel (Id,MakeId,Name,Abrv) e.g. 128,325,X5 (BWM), 
+·         -------VehicleModel (Id,MakeId,Name,Abrv) e.g. 128,325,X5 (BWM), 
 
 ·         Create the solution (back-end) with following projects and elements
 
-·         Project.Service
+·         __Project.Service
 
-·         EF models for above database tables
+·         -------EF models for above database tables
 
-·         VehicleService class - CRUD for Make and Model (Sorting, Filtering & Paging)
+·         -------VehicleService class - CRUD for Make and Model (Sorting, Filtering & Paging)
 
-·         Project.MVC 
+·         __Project.MVC 
 
-·         Make administration view (CRUD with Sorting, Filtering & Paging)
+·         -------Make administration view (CRUD with Sorting, Filtering & Paging)
 
-·         Model administration view (CRUD with Sorting, Filtering & Paging)
+·         -------Model administration view (CRUD with Sorting, Filtering & Paging)
 
-·         Filtering by Make
+·         -------Filtering by Make
 
 
 Implementation details 
