@@ -2,10 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Project.Service.Common;
 using Project.Service.Domain.Models;
 using Project.Service.Domain.Repositories;
 using Project.Service.Domain.Services;
 using Project.Service.Domain.Services.Communication;
+using Project.Service.Paging;
 
 namespace Project.Service.Services
 {
@@ -20,9 +22,9 @@ namespace Project.Service.Services
             _unitOfWork = unitOfWork;
         }
 
-        public async Task<IEnumerable<VehicleMake>> ListAsync()
+        public async Task<PaginatedList<VehicleMake>> ListAllAsync(PagingModel pagingModel, SortingModel sortingModel, FilteringModel filteringModel)
         {
-            return await _vehicleMakeRepository.ListAsync();
+            return await _vehicleMakeRepository.ListMakeAsync(pagingModel, sortingModel, filteringModel);
         }
 
         public async Task<VehicleMakeResponse> SaveAsync(VehicleMake vehicleMake)
@@ -84,6 +86,11 @@ namespace Project.Service.Services
                 // Do some logging stuff
                 return new VehicleMakeResponse($"An error occurred when deleting the vehicleMake: {ex.Message}");
             }
+        }
+
+        public async Task<IEnumerable<VehicleMake>> ListAsync()
+        {
+            return await _vehicleMakeRepository.ListAsync();
         }
 
     }

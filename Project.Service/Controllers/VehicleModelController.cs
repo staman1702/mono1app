@@ -9,6 +9,7 @@ using AutoMapper;
 using Project.Service.Resources;
 using Project.Service.Extensions;
 using Project.Service.Domain.Models;
+using Project.Service.Common;
 
 namespace Project.Service.Controllers
 {
@@ -26,12 +27,29 @@ namespace Project.Service.Controllers
         }
 
         [HttpGet]
-        public async Task<IEnumerable<VehicleModelResource>> ListModelAsync()
+        public async Task<IActionResult> GetAsync()
         {
-            var vehicleModels = await _vehicleModelService.ListModelAsync();
-            var resources = _mapper.Map<IEnumerable<VehicleModel>, IEnumerable<VehicleModelResource>>(vehicleModels);
 
-            return resources;
+            FilteringModel filteringModel = new FilteringModel();
+            PagingModel pagingModel = new PagingModel();
+            SortingModel sortingModel = new SortingModel();
+            var vehicleModels = await _vehicleModelService.ListAllAsync(pagingModel, sortingModel, filteringModel);
+            var resources = _mapper.Map<IEnumerable<VehicleModel>, IEnumerable<VehicleModelResource>>(vehicleModels);
+            var jsonResponse = new
+            {
+                resources,
+                queryParams = new
+                {
+                    pageNo = vehicleModels.CurrentPage,
+                    totalPages = vehicleModels.TotalPages,
+                    hasNextPage = vehicleModels.HasNextPage,
+                    hasPreviousPage = vehicleModels.HasPreviousPage,
+                    currentFilter = filteringModel.Filter ?? "none",
+                    sortOrder = sortingModel.SortBy ?? "id"
+                }
+            };
+            return Ok(jsonResponse);
+
         }
 
         [HttpPost]
@@ -76,6 +94,15 @@ namespace Project.Service.Controllers
 
             var vehicleModelService = _mapper.Map<VehicleModel, VehicleModelResource>(result.VehicleModel);
             return Ok(vehicleModelService);
+        }
+
+        [HttpGet("all")]
+        public async Task<IEnumerable<VehicleModelResource>> ListModelAsync()
+        {
+            var vehicleModels = await _vehicleModelService.ListModelAsync();
+            var resources = _mapper.Map<IEnumerable<VehicleModel>, IEnumerable<VehicleModelResource>>(vehicleModels);
+
+            return resources;
         }
     }
 }

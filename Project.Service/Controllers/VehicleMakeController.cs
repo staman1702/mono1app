@@ -9,6 +9,7 @@ using Project.Service.Resources;
 using Project.Service.Extensions;
 using Project.Service.Domain.Models;
 using Project.Service.Domain.Services;
+using Project.Service.Common;
 
 namespace Project.Service.Controllers
 {
@@ -27,13 +28,30 @@ namespace Project.Service.Controllers
         }
 
         [HttpGet]
-        public async Task<IEnumerable<VehicleMakeResource>> ListAsync()
+        public async Task<IActionResult> GetAsync()
         {
-            var vehicleMakes = await _vehicleMakeService.ListAsync();
-            var resources = _mapper.Map<IEnumerable<VehicleMake>, IEnumerable<VehicleMakeResource>>(vehicleMakes);
 
-            return resources;
-        }
+            FilteringModel filteringModel = new FilteringModel();
+            PagingModel pagingModel = new PagingModel();
+            SortingModel sortingModel = new SortingModel();
+            var vehicleMakes = await _vehicleMakeService.ListAllAsync(pagingModel, sortingModel, filteringModel);
+            var resources = _mapper.Map<IEnumerable<VehicleMake>, IEnumerable<VehicleMakeResource>>(vehicleMakes);
+            var jsonResponse = new
+            {
+                resources,
+                queryParams = new
+                {
+                    pageNo = vehicleMakes.CurrentPage,
+                    totalPages = vehicleMakes.TotalPages,
+                    hasNextPage = vehicleMakes.HasNextPage,
+                    hasPreviousPage = vehicleMakes.HasPreviousPage,
+                    currentFilter = filteringModel.Filter ?? "none",
+                    sortOrder = sortingModel.SortBy ?? "id"
+                }
+            };
+            return Ok(jsonResponse);
+
+        }       
 
         [HttpPost]
         public async Task<IActionResult> PostAsync([FromBody] SaveVehicleMakeResource resource)
@@ -78,5 +96,15 @@ namespace Project.Service.Controllers
             var vehicleMakeResource = _mapper.Map<VehicleMake, VehicleMakeResource>(result.VehicleMake);
             return Ok(vehicleMakeResource);
         }
+
+        [HttpGet("all")]
+        public async Task<IEnumerable<VehicleMakeResource>> ListAsync()
+        {
+            var vehicleMakes = await _vehicleMakeService.ListAsync();
+            var resources = _mapper.Map<IEnumerable<VehicleMake>, IEnumerable<VehicleMakeResource>>(vehicleMakes);
+
+            return resources;
+        }
+
     }
 }

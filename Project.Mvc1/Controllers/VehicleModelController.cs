@@ -21,9 +21,9 @@ namespace Project.Mvc1.Controllers
 
             using (var client = new HttpClient())
             {
-                client.BaseAddress = new Uri("http://localhost:8080/api/VehicleModel");
+                client.BaseAddress = new Uri("http://localhost:8080/api/");
 
-                var responseTask = client.GetAsync("VehicleModel");
+                var responseTask = client.GetAsync("VehicleModel/all");
                 responseTask.Wait();
 
                 var result = responseTask.Result;
@@ -107,9 +107,9 @@ namespace Project.Mvc1.Controllers
 
             using (var client = new HttpClient())
             {
-                client.BaseAddress = new Uri("http://localhost:8080/api/VehicleMake");
+                client.BaseAddress = new Uri("http://localhost:8080/api/");
 
-                var responseTask = client.GetAsync("VehicleMake");
+                var responseTask = client.GetAsync("VehicleMake/all");
                 responseTask.Wait();
 
                 var result = responseTask.Result;
@@ -197,9 +197,9 @@ namespace Project.Mvc1.Controllers
 
             using (var client = new HttpClient())
             {
-                client.BaseAddress = new Uri("http://localhost:8080/api/VehicleMake");
+                client.BaseAddress = new Uri("http://localhost:8080/api/");
 
-                var responseTask = client.GetAsync("VehicleMake");
+                var responseTask = client.GetAsync("VehicleMake/all");
                 responseTask.Wait();
 
                 var result = responseTask.Result;
