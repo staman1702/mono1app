@@ -4,24 +4,26 @@ using System.Linq;
 using System.Threading.Tasks;
 using Project.Service.Domain.Models;
 
-
 namespace Project.Service.Domain.Services.Communication
 {
-    public class VehicleModelResponse : BaseResponse
+    public class VehicleResponse<T> : BaseResponse
     {
-        public VehicleModel VehicleModel { get; private set; }
+        public T VehicleMake { get; private set; }
+        public T VehicleModel { get; private set; }
 
-        private VehicleModelResponse(bool success, string message, VehicleModel vehicleModel) : base(success, message)
+
+        private VehicleResponse(bool success, string message, T item) : base(success, message)
         {
-            VehicleModel = vehicleModel;
+            VehicleMake = item;
+            VehicleModel = item;
         }
 
         /// <summary>
         /// Creates a success response.
         /// </summary>
-        /// <param name="vehicleModel">Saved vehicleMake.</param>
+        /// <param name="item">Saved item.</param>
         /// <returns>Response.</returns>
-        public VehicleModelResponse(VehicleModel vehicleModel) : this(true, string.Empty, vehicleModel)
+        public VehicleResponse(T item) : this(true, string.Empty, item)
         { }
 
         /// <summary>
@@ -29,7 +31,7 @@ namespace Project.Service.Domain.Services.Communication
         /// </summary>
         /// <param name="message">Error message.</param>
         /// <returns>Response.</returns>
-        public VehicleModelResponse(string message) : this(false, message, null)
+        public VehicleResponse(string message) : this(false, message, default)
         { }
     }
 }

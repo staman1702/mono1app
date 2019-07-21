@@ -27,28 +27,28 @@ namespace Project.Service.Services
             return await _vehicleMakeRepository.ListMakeAsync(pagingModel, sortingModel, filteringModel);
         }
 
-        public async Task<VehicleMakeResponse> SaveAsync(VehicleMake vehicleMake)
+        public async Task<VehicleResponse<VehicleMake>> SaveAsync(VehicleMake vehicleMake)
         {
             try
             {
                 await _vehicleMakeRepository.AddAsync(vehicleMake);
                 await _unitOfWork.CompleteAsync();
 
-                return new VehicleMakeResponse(vehicleMake);
+                return new VehicleResponse<VehicleMake>(vehicleMake);
             }
             catch (Exception ex)
             {
                 // Do some logging stuff
-                return new VehicleMakeResponse($"An error occurred when saving the vehicleMake: {ex.Message}");
+                return new VehicleResponse<VehicleMake>($"An error occurred when saving the vehicleMake: {ex.Message}");
             }
         }
 
-        public async Task<VehicleMakeResponse> UpdateAsync(Guid id, VehicleMake vehicleMake)
+        public async Task<VehicleResponse<VehicleMake>> UpdateAsync(Guid id, VehicleMake vehicleMake)
         {
             var existingVehicleMake = await _vehicleMakeRepository.FindByIdAsync(id);
 
             if (existingVehicleMake == null)
-                return new VehicleMakeResponse("VehicleMake not found.");
+                return new VehicleResponse<VehicleMake>("VehicleMake not found.");
 
             existingVehicleMake.Name = vehicleMake.Name;
             existingVehicleMake.Abrv = vehicleMake.Abrv;
@@ -58,33 +58,33 @@ namespace Project.Service.Services
                 _vehicleMakeRepository.Update(existingVehicleMake);
                 await _unitOfWork.CompleteAsync();
 
-                return new VehicleMakeResponse(existingVehicleMake);
+                return new VehicleResponse<VehicleMake>(existingVehicleMake);
             }
             catch (Exception ex)
             {
                 // Do some logging stuff
-                return new VehicleMakeResponse($"An error occurred when updating the vehicleMake: {ex.Message}");
+                return new VehicleResponse<VehicleMake>($"An error occurred when updating the vehicleMake: {ex.Message}");
             }
         }
 
-        public async Task<VehicleMakeResponse> DeleteAsync(Guid id)
+        public async Task<VehicleResponse<VehicleMake>> DeleteAsync(Guid id)
         {
             var existingVehicleMake = await _vehicleMakeRepository.FindByIdAsync(id);
 
             if (existingVehicleMake == null)
-                return new VehicleMakeResponse("VehicleMake not found.");
+                return new VehicleResponse<VehicleMake>("VehicleMake not found.");
 
             try
             {
                 _vehicleMakeRepository.Remove(existingVehicleMake);
                 await _unitOfWork.CompleteAsync();
 
-                return new VehicleMakeResponse(existingVehicleMake);
+                return new VehicleResponse<VehicleMake>(existingVehicleMake);
             }
             catch (Exception ex)
             {
                 // Do some logging stuff
-                return new VehicleMakeResponse($"An error occurred when deleting the vehicleMake: {ex.Message}");
+                return new VehicleResponse<VehicleMake>($"An error occurred when deleting the vehicleMake: {ex.Message}");
             }
         }
     }

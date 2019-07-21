@@ -28,7 +28,7 @@ namespace Project.Service.Services
         }
 
 
-        public async Task<VehicleModelResponse> SaveModelAsync(VehicleModel vehicleModel)
+        public async Task<VehicleResponse<VehicleModel>> SaveModelAsync(VehicleModel vehicleModel)
         {
             try
             {
@@ -36,21 +36,21 @@ namespace Project.Service.Services
                 await _unitOfWork.CompleteAsync();
 
 
-                return new VehicleModelResponse(vehicleModel);
+                return new VehicleResponse<VehicleModel>(vehicleModel);
             }
             catch (Exception ex)
             {
                 // Do some logging stuff
-                return new VehicleModelResponse($"An error occurred when saving the vehicleModel: {ex.Message}");
+                return new VehicleResponse<VehicleModel>($"An error occurred when saving the vehicleModel: {ex.Message}");
             }
         }
 
-        public async Task<VehicleModelResponse> UpdateModelAsync(Guid id, VehicleModel vehicleModel)
+        public async Task<VehicleResponse<VehicleModel>> UpdateModelAsync(Guid id, VehicleModel vehicleModel)
         {
             var existingVehicleModel = await _vehicleModelRepository.FindByIdAsync(id);
 
             if (existingVehicleModel == null)
-                return new VehicleModelResponse("VehicleModel not found.");
+                return new VehicleResponse<VehicleModel>("VehicleModel not found.");
 
             existingVehicleModel.Name = vehicleModel.Name;
             existingVehicleModel.Abrv = vehicleModel.Abrv;
@@ -63,21 +63,21 @@ namespace Project.Service.Services
 
 
 
-                return new VehicleModelResponse(existingVehicleModel);
+                return new VehicleResponse<VehicleModel>(existingVehicleModel);
             }
             catch (Exception ex)
             {
                 // Do some logging stuff
-                return new VehicleModelResponse($"An error occurred when updating the vehicleModel: {ex.Message}");
+                return new VehicleResponse<VehicleModel>($"An error occurred when updating the vehicleModel: {ex.Message}");
             }
         }
 
-        public async Task<VehicleModelResponse> DeleteModelAsync(Guid id)
+        public async Task<VehicleResponse<VehicleModel>> DeleteModelAsync(Guid id)
         {
             var existingVehicleModel = await _vehicleModelRepository.FindByIdAsync(id);
 
             if (existingVehicleModel == null)
-                return new VehicleModelResponse("VehicleModel not found.");
+                return new VehicleResponse<VehicleModel>("VehicleModel not found.");
 
             try
             {
@@ -85,12 +85,12 @@ namespace Project.Service.Services
                 await _unitOfWork.CompleteAsync();
 
 
-                return new VehicleModelResponse(existingVehicleModel);
+                return new VehicleResponse<VehicleModel>(existingVehicleModel);
             }
             catch (Exception ex)
             {
                 // Do some logging stuff
-                return new VehicleModelResponse($"An error occurred when deleting the vehicleMake: {ex.Message}");
+                return new VehicleResponse<VehicleModel>($"An error occurred when deleting the vehicleMake: {ex.Message}");
             }
         }
     }

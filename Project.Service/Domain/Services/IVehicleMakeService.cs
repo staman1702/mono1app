@@ -12,9 +12,9 @@ namespace Project.Service.Domain.Services
     public interface IVehicleMakeService
     {
         Task<PaginatedList<VehicleMake>> ListAllAsync(PagingModel pagingModel, SortingModel sortingModel, FilteringModel filteringModel);
-        Task<VehicleMakeResponse> SaveAsync(VehicleMake vehicleMake);
-        Task<VehicleMakeResponse> UpdateAsync(Guid id, VehicleMake vehicleMake);
-        Task<VehicleMakeResponse> DeleteAsync(Guid id);
+        Task<VehicleResponse<VehicleMake>> SaveAsync(VehicleMake vehicleMake);
+        Task<VehicleResponse<VehicleMake>> UpdateAsync(Guid id, VehicleMake vehicleMake);
+        Task<VehicleResponse<VehicleMake>> DeleteAsync(Guid id);
 
     }
 }
