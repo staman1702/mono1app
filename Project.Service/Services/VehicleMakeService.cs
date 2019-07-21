@@ -87,11 +87,5 @@ namespace Project.Service.Services
                 return new VehicleMakeResponse($"An error occurred when deleting the vehicleMake: {ex.Message}");
             }
         }
-
-        public async Task<IEnumerable<VehicleMake>> ListAsync()
-        {
-            return await _vehicleMakeRepository.ListAsync();
-        }
-
     }
 }

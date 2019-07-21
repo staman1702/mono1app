@@ -77,9 +77,5 @@ namespace Project.Service.Persistence.Repositories
             _context.VehicleMakes.Remove(vehicleMake);
         }
 
-        public async Task<IEnumerable<VehicleMake>> ListAsync()
-        {
-            return await _context.VehicleMakes.ToListAsync();
-        }
     }
 }

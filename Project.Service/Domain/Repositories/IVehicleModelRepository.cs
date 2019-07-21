@@ -15,6 +15,5 @@ namespace Project.Service.Domain.Repositories
         Task<VehicleModel> FindByIdAsync(Guid id);
         void Update(VehicleModel vehicleModel);
         void Remove(VehicleModel vehicleModel);
-        Task<IEnumerable<VehicleModel>> ListAsync();
     }
 }
