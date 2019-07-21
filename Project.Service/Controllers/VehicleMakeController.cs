@@ -95,16 +95,7 @@ namespace Project.Service.Controllers
 
             var vehicleMakeResource = _mapper.Map<VehicleMake, VehicleMakeResource>(result.VehicleMake);
             return Ok(vehicleMakeResource);
-        }
-
-        [HttpGet("all")]
-        public async Task<IEnumerable<VehicleMakeResource>> ListAsync()
-        {
-            var vehicleMakes = await _vehicleMakeService.ListAsync();
-            var resources = _mapper.Map<IEnumerable<VehicleMake>, IEnumerable<VehicleMakeResource>>(vehicleMakes);
-
-            return resources;
-        }
+        }        
 
     }
 }

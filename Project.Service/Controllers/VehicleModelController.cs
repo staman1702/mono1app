@@ -96,13 +96,5 @@ namespace Project.Service.Controllers
             return Ok(vehicleModelService);
         }
 
-        [HttpGet("all")]
-        public async Task<IEnumerable<VehicleModelResource>> ListModelAsync()
-        {
-            var vehicleModels = await _vehicleModelService.ListModelAsync();
-            var resources = _mapper.Map<IEnumerable<VehicleModel>, IEnumerable<VehicleModelResource>>(vehicleModels);
-
-            return resources;
-        }
     }
 }
