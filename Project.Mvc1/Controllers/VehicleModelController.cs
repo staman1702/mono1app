@@ -23,7 +23,7 @@ namespace Project.Mvc1.Controllers
             {
                 client.BaseAddress = new Uri("http://localhost:8080/api/");
 
-                var responseTask = client.GetAsync("VehicleModel/all");
+                var responseTask = client.GetAsync("VehicleModel");
                 responseTask.Wait();
 
                 var result = responseTask.Result;
@@ -109,7 +109,7 @@ namespace Project.Mvc1.Controllers
             {
                 client.BaseAddress = new Uri("http://localhost:8080/api/");
 
-                var responseTask = client.GetAsync("VehicleMake/all");
+                var responseTask = client.GetAsync("VehicleMake");
                 responseTask.Wait();
 
                 var result = responseTask.Result;
@@ -149,7 +149,7 @@ namespace Project.Mvc1.Controllers
             
             using (var client = new HttpClient())
             {
-                client.BaseAddress = new Uri("http://localhost:8080/api/VehicleModel");
+                client.BaseAddress = new Uri("http://localhost:8080/api/");
 
                 var postTask = client.PostAsJsonAsync("VehicleModel", vehicleModel);
                 postTask.Wait();
@@ -179,7 +179,7 @@ namespace Project.Mvc1.Controllers
             {
                 client.BaseAddress = new Uri("http://localhost:8080/api/");
                 //HTTP GET
-                var responseTask = client.GetAsync("VehicleModel/" + id.ToString());
+                var responseTask = client.GetAsync("VehicleModel" + id.ToString());
                 responseTask.Wait();
 
                 var result = responseTask.Result;
@@ -199,7 +199,7 @@ namespace Project.Mvc1.Controllers
             {
                 client.BaseAddress = new Uri("http://localhost:8080/api/");
 
-                var responseTask = client.GetAsync("VehicleMake/all");
+                var responseTask = client.GetAsync("VehicleMake");
                 responseTask.Wait();
 
                 var result = responseTask.Result;
@@ -239,10 +239,10 @@ namespace Project.Mvc1.Controllers
 
             using (var client = new HttpClient())
             {
-                client.BaseAddress = new Uri("http://localhost:8080/api/VehicleModel");
+                client.BaseAddress = new Uri("http://localhost:8080/api/");
 
                 //HTTP POST
-                var putTask = client.PutAsJsonAsync("VehicleModel/" + id.ToString(), vehicleModel);
+                var putTask = client.PutAsJsonAsync("VehicleModel" + id.ToString(), vehicleModel);
                 putTask.Wait();
 
                 var result = putTask.Result;
@@ -264,7 +264,7 @@ namespace Project.Mvc1.Controllers
                 client.BaseAddress = new Uri("http://localhost:8080/api/");
 
                 //HTTP DELETE
-                var deleteTask = client.DeleteAsync("VehicleModel/" + id.ToString());
+                var deleteTask = client.DeleteAsync("VehicleModel" + id.ToString());
                 deleteTask.Wait();
 
                 var result = deleteTask.Result;
@@ -277,8 +277,5 @@ namespace Project.Mvc1.Controllers
 
             return RedirectToAction("Index");
         }
-
-
-        //****
     }
 }

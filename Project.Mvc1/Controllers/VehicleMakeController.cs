@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -22,16 +23,19 @@ namespace Project.Mvc1.Controllers
             {
                 client.BaseAddress = new Uri("http://localhost:8080/api/");
 
-                var responseTask = client.GetAsync("VehicleMake/all/");
+                var responseTask = client.GetAsync("VehicleMake");
                 responseTask.Wait();
 
                 var result = responseTask.Result;
                 if (result.IsSuccessStatusCode)
                 {
-                    var readTask = result.Content.ReadAsAsync<List<VehicleMakeViewModel>>();
-                    readTask.Wait();
+                    var readTask = result.Content.ReadAsStringAsync();
 
-                    vehicleMakes = readTask.Result;
+                    string json = "[" + readTask.Result.ToString() + "]";
+                    var vehicleMks = JsonConvert.DeserializeObject<List<VehicleMakeViewModel>>(json);
+
+
+                    vehicleMakes = vehicleMks;
                 }
                 else
                 {
@@ -94,7 +98,7 @@ namespace Project.Mvc1.Controllers
 
             using (var client = new HttpClient())
             {
-                client.BaseAddress = new Uri("http://localhost:8080/api/VehicleMake");
+                client.BaseAddress = new Uri("http://localhost:8080/api/");
 
                 var postTask = client.PostAsJsonAsync("VehicleMake", vehicleMake);
                 postTask.Wait();
@@ -125,7 +129,7 @@ namespace Project.Mvc1.Controllers
             {
                 client.BaseAddress = new Uri("http://localhost:8080/api/");
                 //HTTP GET
-                var responseTask = client.GetAsync("VehicleMake/" + id.ToString());
+                var responseTask = client.GetAsync("VehicleMake" + id.ToString());
                 responseTask.Wait();
 
                 var result = responseTask.Result;
@@ -147,10 +151,10 @@ namespace Project.Mvc1.Controllers
             
             using (var client = new HttpClient())
             {
-                client.BaseAddress = new Uri("http://localhost:8080/api/VehicleMake");
+                client.BaseAddress = new Uri("http://localhost:8080/api/");
 
                 //HTTP POST
-                var putTask = client.PutAsJsonAsync("VehicleMake/" + id.ToString(), vehicleMake);
+                var putTask = client.PutAsJsonAsync("VehicleMake" + id.ToString(), vehicleMake);
                 putTask.Wait();
 
                 var result = putTask.Result;
@@ -171,7 +175,7 @@ namespace Project.Mvc1.Controllers
                 client.BaseAddress = new Uri("http://localhost:8080/api/");
 
                 //HTTP DELETE
-                var deleteTask = client.DeleteAsync("VehicleMake/" + id.ToString());
+                var deleteTask = client.DeleteAsync("VehicleMake" + id.ToString());
                 deleteTask.Wait();
 
                 var result = deleteTask.Result;
@@ -184,8 +188,5 @@ namespace Project.Mvc1.Controllers
 
             return RedirectToAction("Index");
         }
-
-
-        //****
     }
 }
