@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
-using Project.Service0.Common;
 using Project.Service0.Domain.Models;
 using Project.Service0.Domain.Repositories;
 using Project.Service0.Persistence.Contexts;

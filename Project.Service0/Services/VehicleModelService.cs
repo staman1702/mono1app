@@ -1,12 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using Project.Service0.Domain.Repositories;
 using Project.Service0.Domain.Models;
 using Project.Service0.Domain.Services.Communication;
 using Project.Service0.Domain.Services;
-using Project.Service0.Common;
 
 namespace Project.Service0.Services
 {
@@ -44,7 +42,6 @@ namespace Project.Service0.Services
             }
             catch (Exception ex)
             {
-                // Do some logging stuff
                 return new VehicleResponse<VehicleModel>($"An error occurred when saving the vehicleModel: {ex.Message}");
             }
         }
@@ -71,7 +68,6 @@ namespace Project.Service0.Services
             }
             catch (Exception ex)
             {
-                // Do some logging stuff
                 return new VehicleResponse<VehicleModel>($"An error occurred when updating the vehicleModel: {ex.Message}");
             }
         }
@@ -93,7 +89,6 @@ namespace Project.Service0.Services
             }
             catch (Exception ex)
             {
-                // Do some logging stuff
                 return new VehicleResponse<VehicleModel>($"An error occurred when deleting the vehicleMake: {ex.Message}");
             }
         }
