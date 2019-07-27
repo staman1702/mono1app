@@ -15,5 +15,7 @@ namespace Project.Mvc0.Resources
         [MaxLength(15)]
         public string Abrv { get; set; }
         public Guid VehicleMakeId { get; set; }
+        public VehicleMakeResource VehicleMake { get; set; }
+
     }
 }
