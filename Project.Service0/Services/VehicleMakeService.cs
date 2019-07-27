@@ -7,7 +7,7 @@ using Project.Service0.Domain.Models;
 using Project.Service0.Domain.Repositories;
 using Project.Service0.Domain.Services;
 using Project.Service0.Domain.Services.Communication;
-using Project.Service0.Paging;
+
 
 namespace Project.Service0.Services
 {
@@ -22,9 +22,15 @@ namespace Project.Service0.Services
             _unitOfWork = unitOfWork;
         }
 
-        public async Task<PaginatedList<VehicleMake>> ListAllAsync(PagingModel pagingModel, SortingModel sortingModel, FilteringModel filteringModel)
+        public async Task<IEnumerable<VehicleMake>> ListAllAsync()
         {
-            return await _vehicleMakeRepository.ListMakeAsync(pagingModel, sortingModel, filteringModel);
+            return await _vehicleMakeRepository.ListMakeAsync();
+        }
+
+        public async Task<VehicleMake> FindAsync(Guid id)
+        {
+            return await _vehicleMakeRepository.FindByIdAsync(id);
+            
         }
 
         public async Task<VehicleResponse<VehicleMake>> SaveAsync(VehicleMake vehicleMake)

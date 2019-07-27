@@ -5,13 +5,14 @@ using System.Threading.Tasks;
 using Project.Service0.Common;
 using Project.Service0.Domain.Models;
 using Project.Service0.Domain.Services.Communication;
-using Project.Service0.Paging;
+
 
 namespace Project.Service0.Domain.Services
 {
     public interface IVehicleMakeService
     {
-        Task<PaginatedList<VehicleMake>> ListAllAsync(PagingModel pagingModel, SortingModel sortingModel, FilteringModel filteringModel);
+        Task<IEnumerable<VehicleMake>> ListAllAsync();
+        Task<VehicleMake> FindAsync(Guid id);
         Task<VehicleResponse<VehicleMake>> SaveAsync(VehicleMake vehicleMake);
         Task<VehicleResponse<VehicleMake>> UpdateAsync(Guid id, VehicleMake vehicleMake);
         Task<VehicleResponse<VehicleMake>> DeleteAsync(Guid id);

@@ -8,7 +8,7 @@ namespace Project.Service0.Domain.Services.Communication
 {
     public class VehicleResponse<T> : BaseResponse
     {
-        public T VehicleMake { get; private set; }
+        public T VehicleMake { get; set; }
         public T VehicleModel { get; private set; }
 
 

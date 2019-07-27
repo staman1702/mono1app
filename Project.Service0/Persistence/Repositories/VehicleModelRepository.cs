@@ -6,7 +6,6 @@ using Microsoft.EntityFrameworkCore;
 using Project.Service0.Common;
 using Project.Service0.Domain.Models;
 using Project.Service0.Domain.Repositories;
-using Project.Service0.Paging;
 using Project.Service0.Persistence.Contexts;
 
 namespace Project.Service0.Persistence.Repositories
@@ -18,50 +17,10 @@ namespace Project.Service0.Persistence.Repositories
 
         }
 
-        public async Task<PaginatedList<VehicleModel>> ListMakeAsync(PagingModel pagingModel, SortingModel sortingModel, FilteringModel filteringModel)
+        public async Task<IEnumerable<VehicleModel>> ListModelAsync()
         {
-            var vehicleModels = from vehicle in _context.VehicleModels.Include(p => p.VehicleMake) select vehicle;
-            if (filteringModel.Filter != null)
-            {
-                vehicleModels = vehicleModels.Where(vehicleModel => vehicleModel.Name.Contains(filteringModel.Filter)
-                                                                 || vehicleModel.Abrv.Contains(filteringModel.Filter));
-            }
-
-
-            if (string.IsNullOrEmpty(sortingModel.SortBy))
-            {
-                vehicleModels = vehicleModels.OrderBy(vehicleModel => vehicleModel.Id);
-            }
-            else if (sortingModel.SortBy.Equals("Name", StringComparison.OrdinalIgnoreCase))
-            {
-                vehicleModels = vehicleModels.OrderBy(vehicleModel => vehicleModel.Name);
-            }
-            else if (sortingModel.SortBy.Equals("NameDesc", StringComparison.OrdinalIgnoreCase))
-            {
-                vehicleModels = vehicleModels.OrderByDescending(vehicleModel => vehicleModel.Name);
-            }
-            else if (sortingModel.SortBy.Equals("Abrv", StringComparison.OrdinalIgnoreCase))
-            {
-                vehicleModels = vehicleModels.OrderBy(vehicleModel => vehicleModel.Abrv);
-            }
-            else if (sortingModel.SortBy.Equals("AbrvDesc", StringComparison.OrdinalIgnoreCase))
-            {
-                vehicleModels = vehicleModels.OrderByDescending(vehicleModel => vehicleModel.Abrv);
-            }
-            else if (sortingModel.SortBy.Equals("VehicleMakeId", StringComparison.OrdinalIgnoreCase))
-            {
-                vehicleModels = vehicleModels.OrderBy(vehicleModel => vehicleModel.VehicleMakeId);
-            }
-            else if (sortingModel.SortBy.Equals("VehicleMakeIdDesc", StringComparison.OrdinalIgnoreCase))
-            {
-                vehicleModels = vehicleModels.OrderByDescending(vehicleModel => vehicleModel.VehicleMakeId);
-            }
-
-
-            return await PaginatedList<VehicleModel>.CreateAsync
-                (vehicleModels, pagingModel.CurrentPage ?? 1, pagingModel.TotalPages ?? _context.VehicleModels.Count());
-
-        }  
+            return await _context.VehicleModels.Include(p => p.VehicleMake).ToListAsync();
+        }
 
         public async Task AddAsync(VehicleModel vehicleModel)
         {

@@ -6,7 +6,6 @@ using Microsoft.EntityFrameworkCore;
 using Project.Service0.Common;
 using Project.Service0.Domain.Models;
 using Project.Service0.Domain.Repositories;
-using Project.Service0.Paging;
 using Project.Service0.Persistence.Contexts;
 
 namespace Project.Service0.Persistence.Repositories
@@ -18,43 +17,9 @@ namespace Project.Service0.Persistence.Repositories
 
         }
 
-
-        public async Task<PaginatedList<VehicleMake>> ListMakeAsync(PagingModel pagingModel, SortingModel sortingModel, FilteringModel filteringModel)
+        public async Task<IEnumerable<VehicleMake>> ListMakeAsync()
         {
-            var vehicleMakes = from vehicle in _context.VehicleMakes select vehicle;
-            if (filteringModel.Filter != null)
-            {
-                vehicleMakes = vehicleMakes.Where(vehicleModel => vehicleModel.Name.Contains(filteringModel.Filter)
-                                                                 || vehicleModel.Abrv.Contains(filteringModel.Filter));
-            }
-
-
-            if (string.IsNullOrEmpty(sortingModel.SortBy))
-            {
-                vehicleMakes = vehicleMakes.OrderBy(vehicleModel => vehicleModel.Id);
-            }
-            else if (sortingModel.SortBy.Equals("Name", StringComparison.OrdinalIgnoreCase))
-            {
-                vehicleMakes = vehicleMakes.OrderBy(vehicleModel => vehicleModel.Name);
-            }
-            else if (sortingModel.SortBy.Equals("NameDesc", StringComparison.OrdinalIgnoreCase))
-            {
-                vehicleMakes = vehicleMakes.OrderByDescending(vehicleModel => vehicleModel.Name);
-            }
-            else if (sortingModel.SortBy.Equals("Abrv", StringComparison.OrdinalIgnoreCase))
-            {
-                vehicleMakes = vehicleMakes.OrderBy(vehicleModel => vehicleModel.Abrv);
-            }
-            else if (sortingModel.SortBy.Equals("AbrvDesc", StringComparison.OrdinalIgnoreCase))
-            {
-                vehicleMakes = vehicleMakes.OrderByDescending(vehicleModel => vehicleModel.Abrv);
-            }
-
-
-
-            return await PaginatedList<VehicleMake>.CreateAsync
-                (vehicleMakes, pagingModel.CurrentPage ?? 1, pagingModel.TotalPages ?? _context.VehicleModels.Count());
-
+            return await _context.VehicleMakes.ToListAsync();
         }   
 
         public async Task AddAsync(VehicleMake vehicleMake)
