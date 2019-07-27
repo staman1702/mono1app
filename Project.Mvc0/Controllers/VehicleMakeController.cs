@@ -2,21 +2,18 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using AutoMapper;
 using Project.Mvc0.Resources;
 using Project.Mvc0.Extensions;
 using Project.Service0.Domain.Models;
 using Project.Service0.Domain.Services;
-using Project.Service0.Common;
-using Project.Service0.Paging;
+using Project.Mvc0.Paging;
 
 namespace Project.Mvc0.Controllers
 {
-    [Route("api/VehicleMake")]
-    [ApiController]
-    public class VehicleMakeController : ControllerBase
+    
+    public class VehicleMakeController : Controller
     {
 
         private readonly IVehicleMakeService _vehicleMakeService;        
@@ -29,52 +26,93 @@ namespace Project.Mvc0.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetAsync()
+        public async Task<ActionResult> Index(string sortOrder, string currentFilter, string searchString, int? pageNumber)
         {
 
-            FilteringModel filteringModel = new FilteringModel();
-            PagingModel pagingModel = new PagingModel();
-            SortingModel sortingModel = new SortingModel();
-            var vehicleMakes = await _vehicleMakeService.ListAllAsync(pagingModel, sortingModel, filteringModel);
+            var vehicleMakes = await _vehicleMakeService.ListAllAsync();
             var resources = _mapper.Map<IEnumerable<VehicleMake>, IEnumerable<VehicleMakeResource>>(vehicleMakes);
-            var jsonResponse = new
+
+            ViewData["CurrentSort"] = sortOrder;
+            ViewData["NameSortParm"] = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
+            ViewData["AbrvSortParm"] = sortOrder == "Abrv" ? "abrv_desc" : "Abrv";
+
+            if (searchString != null)
             {
-                data = resources,
-                queryParams = new
-                {
-                    pageNo = vehicleMakes.CurrentPage,
-                    totalPages = vehicleMakes.TotalPages,
-                    hasNextPage = vehicleMakes.HasNextPage,
-                    hasPreviousPage = vehicleMakes.HasPreviousPage,
-                    currentFilter = filteringModel.Filter ?? "none",
-                    sortOrder = sortingModel.SortBy ?? "id"
-                }
-            };
+                pageNumber = 1;
+            }
+            else
+            {
+                searchString = currentFilter;
+            }
 
-            
+            ViewData["CurrentFilter"] = searchString;
 
-            return this.Ok(jsonResponse);
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                resources = resources.Where(m => m.Name.Contains(searchString)).ToList();
+            }
 
-        }       
+            switch (sortOrder)
+            {
+                case "name_desc":
+                    resources = resources.OrderByDescending(m => m.Name).ToList();
+                    break;
+                case "Abrv":
+                    resources = resources.OrderBy(m => m.Abrv).ToList();
+                    break;
+                case "abrv_desc":
+                    resources = resources.OrderByDescending(m => m.Abrv).ToList();
+                    break;
+                default:
+                    resources = resources.OrderBy(m => m.Name).ToList();
+                    break;
+            }
+
+            int pageSize = 3;
+
+            return View(PaginatedList<VehicleMakeResource>.Create(resources.ToList(), pageNumber ?? 1, pageSize));
+
+        }
+
+        [HttpGet]
+        public ActionResult Create()
+        {
+            return View();
+        }
 
         [HttpPost]
-        public async Task<IActionResult> PostAsync([FromBody] SaveVehicleMakeResource resource)
+        public async Task<ActionResult> Create(SaveVehicleMakeResource resource)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState.GetErrorMessages());
 
             var vehicleMake = _mapper.Map<SaveVehicleMakeResource, VehicleMake>(resource);
             var result = await _vehicleMakeService.SaveAsync(vehicleMake);
-
+                        
+            if (result.Success)
+            {
+                return RedirectToAction("Index");
+            }
             if (!result.Success)
                 return BadRequest(result.Message);
 
             var vehicleMakeResource = _mapper.Map<VehicleMake, VehicleMakeResource>(result.VehicleMake);
-            return Ok(vehicleMakeResource);
+                       
+
+            return View(vehicleMakeResource);
         }
 
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutAsync(Guid id, [FromBody] SaveVehicleMakeResource resource)
+        [HttpGet]
+        public async Task<ActionResult> Edit(Guid id)
+        {                      
+            var result = await _vehicleMakeService.FindAsync(id);            
+            var vehicleMakeResource = _mapper.Map<VehicleMake, VehicleMakeResource>(result);
+
+            return View(vehicleMakeResource);
+        }
+
+                
+        public async Task<IActionResult> Edit(Guid id, SaveVehicleMakeResource resource)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState.GetErrorMessages());
@@ -82,23 +120,28 @@ namespace Project.Mvc0.Controllers
             var make = _mapper.Map<SaveVehicleMakeResource, VehicleMake>(resource);
             var result = await _vehicleMakeService.UpdateAsync(id, make);
 
+            if (result.Success)
+            {
+                return RedirectToAction("Index");
+            }
             if (!result.Success)
                 return BadRequest(result.Message);
 
             var vehicleMakeResource = _mapper.Map<VehicleMake, VehicleMakeResource>(result.VehicleMake);
-            return Ok(vehicleMakeResource);
+
+            return View(vehicleMakeResource);
         }
 
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteAsync(Guid id)
+        
+        public async Task<IActionResult> Delete(Guid id)
         {
             var result = await _vehicleMakeService.DeleteAsync(id);
 
             if (!result.Success)
                 return BadRequest(result.Message);
+                       
 
-            var vehicleMakeResource = _mapper.Map<VehicleMake, VehicleMakeResource>(result.VehicleMake);
-            return Ok(vehicleMakeResource);
+            return RedirectToAction("Index");
         }        
 
     }
