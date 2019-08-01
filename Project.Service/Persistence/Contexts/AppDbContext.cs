@@ -38,7 +38,7 @@ namespace Project.Service.Persistence.Contexts
             builder.Entity<VehicleModel>().ToTable("VehicleModels");
             builder.Entity<VehicleModel>().HasKey(p => p.Id);
             builder.Entity<VehicleModel>().Property(p => p.Id).IsRequired();
-            builder.Entity<VehicleModel>().Property(p => p.Name).IsRequired().HasMaxLength(35);
+            builder.Entity<VehicleModel>().Property(p => p.Name).IsRequired().HasMaxLength(50);
             builder.Entity<VehicleModel>().Property(p => p.Abrv).IsRequired().HasMaxLength(15);
             builder.Entity<VehicleModel>().Property(p => p.VehicleMakeId).IsRequired();
 
