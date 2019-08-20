@@ -26,15 +26,15 @@ namespace Project.Service.Services
 
         public async Task<VehicleModel> FindModelAsync(Guid id)
         {
-            return await _vehicleModelRepository.FindByIdAsync(id);
+            return await _vehicleModelRepository.FindModelByIdAsync(id);
 
         }
 
-        public async Task<VehicleResponse<VehicleModel>> SaveModelAsync(VehicleModel vehicleModel)
+        public async Task<VehicleResponse<VehicleModel>> SaveAsync(VehicleModel vehicleModel)
         {
             try
             {
-                await _vehicleModelRepository.AddAsync(vehicleModel);
+                await _vehicleModelRepository.AddModelAsync(vehicleModel);
                 await _unitOfWork.CompleteAsync();
 
 
@@ -46,9 +46,9 @@ namespace Project.Service.Services
             }
         }
 
-        public async Task<VehicleResponse<VehicleModel>> UpdateModelAsync(Guid id, VehicleModel vehicleModel)
+        public async Task<VehicleResponse<VehicleModel>> UpdateAsync(Guid id, VehicleModel vehicleModel)
         {
-            var existingVehicleModel = await _vehicleModelRepository.FindByIdAsync(id);
+            var existingVehicleModel = await _vehicleModelRepository.FindModelByIdAsync(id);
 
             if (existingVehicleModel == null)
                 return new VehicleResponse<VehicleModel>("VehicleModel not found.");
@@ -59,7 +59,7 @@ namespace Project.Service.Services
 
             try
             {
-                _vehicleModelRepository.Update(existingVehicleModel);
+                await _vehicleModelRepository.UpdateModelAsync(existingVehicleModel);
                 await _unitOfWork.CompleteAsync();
 
 
@@ -72,16 +72,16 @@ namespace Project.Service.Services
             }
         }
 
-        public async Task<VehicleResponse<VehicleModel>> DeleteModelAsync(Guid id)
+        public async Task<VehicleResponse<VehicleModel>> DeleteAsync(Guid id)
         {
-            var existingVehicleModel = await _vehicleModelRepository.FindByIdAsync(id);
+            var existingVehicleModel = await _vehicleModelRepository.FindModelByIdAsync(id);
 
             if (existingVehicleModel == null)
                 return new VehicleResponse<VehicleModel>("VehicleModel not found.");
 
             try
             {
-                _vehicleModelRepository.Remove(existingVehicleModel);
+                await _vehicleModelRepository.RemoveModelAsync(existingVehicleModel);
                 await _unitOfWork.CompleteAsync();
 
 

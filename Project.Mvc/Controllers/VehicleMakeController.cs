@@ -36,7 +36,7 @@ namespace Project.Mvc.Controllers
             ViewData["NameSortParm"] = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
             ViewData["AbrvSortParm"] = sortOrder == "Abrv" ? "abrv_desc" : "Abrv";
 
-            if (searchString != null)
+            if (!String.IsNullOrWhiteSpace(searchString))
             {
                 pageNumber = 1;
             }
@@ -105,7 +105,7 @@ namespace Project.Mvc.Controllers
         [HttpGet]
         public async Task<ActionResult> Edit(Guid id)
         {                      
-            var result = await _vehicleMakeService.FindAsync(id);            
+            var result = await _vehicleMakeService.FindMakeAsync(id);            
             var vehicleMakeResource = _mapper.Map<VehicleMake, VehicleMakeResource>(result);
 
             return View(vehicleMakeResource);

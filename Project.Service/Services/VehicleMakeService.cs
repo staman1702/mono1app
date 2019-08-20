@@ -26,9 +26,9 @@ namespace Project.Service.Services
             return await _vehicleMakeRepository.ListMakeAsync();
         }
 
-        public async Task<VehicleMake> FindAsync(Guid id)
+        public async Task<VehicleMake> FindMakeAsync(Guid id)
         {
-            return await _vehicleMakeRepository.FindByIdAsync(id);
+            return await _vehicleMakeRepository.FindMakeByIdAsync(id);
             
         }
 
@@ -36,7 +36,7 @@ namespace Project.Service.Services
         {
             try
             {
-                await _vehicleMakeRepository.AddAsync(vehicleMake);
+                await _vehicleMakeRepository.AddMakeAsync(vehicleMake);
                 await _unitOfWork.CompleteAsync();
 
                 return new VehicleResponse<VehicleMake>(vehicleMake);
@@ -49,7 +49,7 @@ namespace Project.Service.Services
 
         public async Task<VehicleResponse<VehicleMake>> UpdateAsync(Guid id, VehicleMake vehicleMake)
         {
-            var existingVehicleMake = await _vehicleMakeRepository.FindByIdAsync(id);
+            var existingVehicleMake = await _vehicleMakeRepository.FindMakeByIdAsync(id);
 
             if (existingVehicleMake == null)
                 return new VehicleResponse<VehicleMake>("VehicleMake not found.");
@@ -59,7 +59,7 @@ namespace Project.Service.Services
 
             try
             {
-                _vehicleMakeRepository.Update(existingVehicleMake);
+                await _vehicleMakeRepository.UpdateMakeAsync(existingVehicleMake);
                 await _unitOfWork.CompleteAsync();
 
                 return new VehicleResponse<VehicleMake>(existingVehicleMake);
@@ -72,14 +72,14 @@ namespace Project.Service.Services
 
         public async Task<VehicleResponse<VehicleMake>> DeleteAsync(Guid id)
         {
-            var existingVehicleMake = await _vehicleMakeRepository.FindByIdAsync(id);
+            var existingVehicleMake = await _vehicleMakeRepository.FindMakeByIdAsync(id);
 
             if (existingVehicleMake == null)
                 return new VehicleResponse<VehicleMake>("VehicleMake not found.");
 
             try
             {
-                _vehicleMakeRepository.Remove(existingVehicleMake);
+                await _vehicleMakeRepository.DeleteMakeAsync(existingVehicleMake);
                 await _unitOfWork.CompleteAsync();
 
                 return new VehicleResponse<VehicleMake>(existingVehicleMake);

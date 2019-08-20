@@ -10,7 +10,7 @@ namespace Project.Service.Domain.Services
     public interface IVehicleMakeService
     {
         Task<IEnumerable<VehicleMake>> ListAllAsync();
-        Task<VehicleMake> FindAsync(Guid id);
+        Task<VehicleMake> FindMakeAsync(Guid id);
         Task<VehicleResponse<VehicleMake>> SaveAsync(VehicleMake vehicleMake);
         Task<VehicleResponse<VehicleMake>> UpdateAsync(Guid id, VehicleMake vehicleMake);
         Task<VehicleResponse<VehicleMake>> DeleteAsync(Guid id);

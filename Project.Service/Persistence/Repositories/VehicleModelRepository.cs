@@ -20,24 +20,26 @@ namespace Project.Service.Persistence.Repositories
             return await _context.VehicleModels.Include(p => p.VehicleMake).ToListAsync();
         }
 
-        public async Task AddAsync(VehicleModel vehicleModel)
+        public async Task AddModelAsync(VehicleModel vehicleModel)
         {
             await _context.VehicleModels.AddAsync(vehicleModel);
         }
 
-        public async Task<VehicleModel> FindByIdAsync(Guid id)
+        public async Task<VehicleModel> FindModelByIdAsync(Guid id)
         {
             return await _context.VehicleModels.FindAsync(id);
         }
 
-        public void Update(VehicleModel vehicleModel)
+        public async Task UpdateModelAsync(VehicleModel vehicleModel)
         {
             _context.VehicleModels.Update(vehicleModel);
+            await _context.SaveChangesAsync();
         }
 
-        public void Remove(VehicleModel vehicleModel)
+        public async Task RemoveModelAsync(VehicleModel vehicleModel)
         {
             _context.VehicleModels.Remove(vehicleModel);
+            await _context.SaveChangesAsync();
         }
 
     }

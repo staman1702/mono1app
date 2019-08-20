@@ -30,8 +30,8 @@ namespace Project.Mvc.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult> Index(string sortOrder, string currentFilter, string searchString1, 
-                                                                    string searchString2, int? pageNumber)
+        public async Task<ActionResult> Index(string sortOrder, string currentFilter, string searchByModel, 
+                                                                    string searchByMake, int? pageNumber)
         {
             var vehicleModels = await _vehicleModelService.ListAllAsync();
             var resources = _mapper.Map<IEnumerable<VehicleModel>, IEnumerable<VehicleModelResource>>(vehicleModels);
@@ -42,28 +42,28 @@ namespace Project.Mvc.Controllers
             ViewData["MakeSortParm"] = sortOrder == "Make" ? "make_desc" : "Make";
 
 
-            if (searchString1 != null)
+            if (!String.IsNullOrWhiteSpace(searchByModel))
             {
                 pageNumber = 1;
             }
             else
             {
-                searchString1 = currentFilter;
+                searchByModel = currentFilter;
             }
 
-            ViewData["CurrentFilter"] = searchString1;
+            ViewData["CurrentFilter"] = searchByModel;
 
-            if (!String.IsNullOrEmpty(searchString1))
+            if (!String.IsNullOrEmpty(searchByModel))
             {
-                ViewData["SearchString1"] = searchString1;
-                resources = resources.Where(m => m.Name.Contains(searchString1)).ToList();
+                ViewData["SearchByModel"] = searchByModel;
+                resources = resources.Where(m => m.Name.Contains(searchByModel)).ToList();
             }
 
 
-            if (!String.IsNullOrEmpty(searchString2))
+            if (!String.IsNullOrEmpty(searchByMake))
             {
-                ViewData["SearchString2"] = searchString2;
-                resources = resources.Where(m => m.VehicleMake.Name.Contains(searchString2)).ToList();
+                ViewData["SearchByMake"] = searchByMake;
+                resources = resources.Where(m => m.VehicleMake.Name.Contains(searchByMake)).ToList();
             }
 
             switch (sortOrder)
@@ -125,7 +125,7 @@ namespace Project.Mvc.Controllers
                 return BadRequest(ModelState.GetErrorMessages());
 
             var vehicleModel = _mapper.Map<SaveVehicleModelResource, VehicleModel>(resource);
-            var result = await _vehicleModelService.SaveModelAsync(vehicleModel);
+            var result = await _vehicleModelService.SaveAsync(vehicleModel);
 
             if (result.Success)
             {
@@ -171,7 +171,7 @@ namespace Project.Mvc.Controllers
                 return BadRequest(ModelState.GetErrorMessages());
 
             var model = _mapper.Map<SaveVehicleModelResource, VehicleModel>(resource);
-            var result = await _vehicleModelService.UpdateModelAsync(id, model);
+            var result = await _vehicleModelService.UpdateAsync(id, model);
 
             if (result.Success)
             {
@@ -187,7 +187,7 @@ namespace Project.Mvc.Controllers
 
         public async Task<IActionResult> Delete(Guid id)
         {
-            var result = await _vehicleModelService.DeleteModelAsync(id);
+            var result = await _vehicleModelService.DeleteAsync(id);
 
             if (!result.Success)
                 return BadRequest(result.Message);

@@ -10,9 +10,9 @@ namespace Project.Service.Domain.Repositories
     public interface IVehicleMakeRepository
     {
         Task<IEnumerable<VehicleMake>> ListMakeAsync();
-        Task AddAsync(VehicleMake vehicleMake);
-        Task<VehicleMake> FindByIdAsync(Guid id);
-        void Update(VehicleMake vehicleMake);
-        void Remove(VehicleMake vehicleMake);
+        Task AddMakeAsync(VehicleMake vehicleMake);
+        Task<VehicleMake> FindMakeByIdAsync(Guid id);
+        Task UpdateMakeAsync(VehicleMake vehicleMake);
+        Task DeleteMakeAsync(VehicleMake vehicleMake);
     }
 }

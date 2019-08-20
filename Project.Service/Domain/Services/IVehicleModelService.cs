@@ -11,9 +11,9 @@ namespace Project.Service.Domain.Services
     {
         Task<IEnumerable<VehicleModel>> ListAllAsync();
         Task<VehicleModel> FindModelAsync(Guid id);
-        Task<VehicleResponse<VehicleModel>> SaveModelAsync(VehicleModel vehicleModel);
-        Task<VehicleResponse<VehicleModel>> UpdateModelAsync(Guid id, VehicleModel vehicleModel);
-        Task<VehicleResponse<VehicleModel>> DeleteModelAsync(Guid id);
+        Task<VehicleResponse<VehicleModel>> SaveAsync(VehicleModel vehicleModel);
+        Task<VehicleResponse<VehicleModel>> UpdateAsync(Guid id, VehicleModel vehicleModel);
+        Task<VehicleResponse<VehicleModel>> DeleteAsync(Guid id);
 
     }
 }
